@@ -10,9 +10,9 @@ public class MusicLibrary {
             double duration = StdIn.readDouble();
 
             // StdAudio.play(majorChord(pitch, duration));
+            // StdAudio.play(harmonics(pitch, duration));
             StdAudio.play(minorChord(pitch, duration));
-
-
+            StdAudio.play(majorChord(pitch, duration));
         }
     }
 
@@ -50,9 +50,12 @@ public class MusicLibrary {
         return ArrayTools.scale(e, volume);
     }
 
-
     public static double[] sum(double[] a, double[] b, double c, double d) {
     	return ArrayTools.add(a, b, c, d);
+    }
+
+    public static double[] clip(double[] a, double b) {
+    	return ArrayTools.threshold(a,b);
     }
 
     public static double[] sinstuff(double duration, double hz) {
