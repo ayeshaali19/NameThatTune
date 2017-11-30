@@ -70,34 +70,6 @@ public class MusicLibrary {
         return ArrayTools.scale(e, volume);
     }
 
-    public static double[] sum(double[] a, double[] b, double c, double d) {
-        return ArrayTools.add(a,b,c,d);
-    }
-
-    public static double[] clip(double[] a, double threshold) {
-        for (int i = 0; i < a.length; i++) {
-            if (a[i] > threshold) {
-                a[i] = threshold;
-            }
-        }
-        return a;
-    }
-
-    public static double[] fadeIn(double[] a, double secs) {
-       int n = (int) (StdAudio.SAMPLE_RATE * secs);
-       for (int i = 0; i<n; i++) {
-            a[i] = 0;
-       }
-       return a;
-    }
-
-    public static double[] fadeOut(double[] a, double secs) {
-       int n = (int) (StdAudio.SAMPLE_RATE * secs);
-       for (int i = a.length; i<a.length-n; i++) {
-            a[i] = 0;
-       }
-       return a;
-    }
 
     public static double[] sinstuff(double duration, double chord) {
         int n = (int) (StdAudio.SAMPLE_RATE * duration);
