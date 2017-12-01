@@ -11,8 +11,11 @@ public class MusicLibrary {
 
             // StdAudio.play(majorChord(pitch, duration));
             // StdAudio.play(harmonics(pitch, duration));
-            StdAudio.play(minorChord(pitch, duration));
-            StdAudio.play(majorChord(pitch, duration));
+            // StdAudio.play(fadeIn(minorChord(pitch, duration), 2));
+            // StdAudio.play(changeVolume(pitch, duration,.1));
+
+           	StdAudio.play(fadeOut(majorChord(pitch,duration),2));
+            // StdAudio.play(changeVolume(pitch, duration,.1));
         }
     }
     
@@ -39,8 +42,8 @@ public class MusicLibrary {
         double[] b = sinstuff(duration, 440 * Math.pow(2, (pitch + 3) / 12.0));
         double[] c = sinstuff(duration, 440 * Math.pow(2, (pitch + 7) / 12.0));
 
-        double[] e = ArrayTools.add(a, b, 0.5, 0.5);
-        double[] f = ArrayTools.add(e, c, 0.5, 0.5);
+        double[] e = sum(a, b, 0.5, 0.5);
+        double[] f = sum(e, c, 0.5, 0.5);
         return f;
     }
 
@@ -61,6 +64,29 @@ public class MusicLibrary {
 			}
 		}
 		return a;
+    }
+
+    public static double[] fadeIn(double[] a, int secs) {
+    	int time = (int) (StdAudio.SAMPLE_RATE * secs);
+    	double add = 1/time;
+
+    	for (int i =0; i<time; i++) {
+    		b[i]= a[i]*i;
+    	}
+
+    	return a;
+    }
+
+    public static double[] fadeOut(double[] a, int secs) {
+    	int time = (int) (StdAudio.SAMPLE_RATE * secs);
+    	double usualval = a[a.length-time];
+    	double add = usualval/time;
+
+    	for (int i = 0; i<time; i++) {
+    		a[a.length-i-1]= usualval-(add*i);
+    	}
+
+    	return a;
     }
 
     public static double[] sinstuff(double duration, double hz) {
