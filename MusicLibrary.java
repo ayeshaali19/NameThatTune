@@ -55,7 +55,12 @@ public class MusicLibrary {
     }
 
     public static double[] clip(double[] a, double b) {
-    	return ArrayTools.threshold(a,b);
+    	for (int i = 0; i < a.length; i++) {
+			if (a[i] >= b) {
+				a[i] = b;
+			}
+		}
+		return a;
     }
 
     public static double[] sinstuff(double duration, double hz) {
