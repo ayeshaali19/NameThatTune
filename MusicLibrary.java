@@ -15,7 +15,7 @@ public class MusicLibrary {
             StdAudio.play(majorChord(pitch, duration));
         }
     }
-
+//feh
     public static double[] harmonics(int pitch, double duration) {
         double hz = 440.0 * Math.pow(2, pitch / 12.0);
         double[] hi = sinstuff(duration, 2*hz);
