@@ -85,8 +85,8 @@ public class MusicLibrary {
     	double[] b = ArrayTools.duplicate(a);
 
 
-    	for (int i =time; i<0; i++) {
-    		b[a.length-i]= a[a.length-i]*i/time;
+    	for (int i =0; i<time; i++) {
+    		b[a.length-i-1]= a[a.length-i-1]*i/time;
     		System.out.println(b[i]);
     	}
     	
