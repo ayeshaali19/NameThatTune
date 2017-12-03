@@ -9,13 +9,15 @@ public class MusicLibrary {
             // read in duration in seconds
             double duration = StdIn.readDouble();
 
-            StdAudio.play(harmonics(pitch, duration));
+            /*StdAudio.play(harmonics(pitch, duration));
             StdAudio.play(majorChord(pitch, duration));
             StdAudio.play(minorChord(pitch, duration));
             StdAudio.play(changeVolume(minorChord(pitch, duration),10));
            	StdAudio.play(fadeIn(minorChord(pitch,duration),2));
-           	StdAudio.play(fadeOut(majorChord(pitch,duration),2));
-           	// ArrayTools.printArray(fadeIn(majorChord(pitch,duration),2));
+           	StdAudio.play(fadeOut(majorChord(pitch,duration),2));*/
+           	
+           	double[] a = {0,0,0,0,0,0,0,22,28,91,34,18,29,22,0,0,0,0,0,0};
+           	ArrayTools.printArray(trim(a));
             
         }
     }
@@ -63,6 +65,32 @@ public class MusicLibrary {
 			}
 		}
 		return a;
+    }
+
+    public static double[] trim(double[] a) {
+    	int index1 = 0;
+    	int length = a.length;
+    	for (int i = 0; i < length; i++) {
+			if (a[i] ==0) {
+				index1 = i;
+			} else {
+				length = i;
+			}
+		}
+
+		length = 0;
+		int index2 = 0;
+		for (int y = a.length-1; y > length; y--) {
+			if (a[y]==0) {
+				index2 = y;
+			} else {
+				length = y;
+			}
+		}
+
+		double[] e = ArrayTools.copy(a,index1,index2);
+
+		return e;
     }
 
     public static double[] fadeIn(double[] a, int secs) {

@@ -172,9 +172,9 @@ public class ArrayTools {
    */
 
 	public static double[] copy(double a[], int b, int c) {
-		double[] d = new double[c-b];
+		double[] d = new double[c-b-1];
 		for (int i = 0; i<d.length; i++) {
-			d[i] = a[i+b];
+			d[i] = a[i+1+b];
 		}
 		return d;
 	}
