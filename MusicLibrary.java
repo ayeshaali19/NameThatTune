@@ -9,14 +9,14 @@ public class MusicLibrary {
             // read in duration in seconds
             double duration = StdIn.readDouble();
 
-            // StdAudio.play(majorChord(pitch, duration));
-            // StdAudio.play(harmonics(pitch, duration));
-            // StdAudio.play(fadeIn(minorChord(pitch, duration), 2));
-            // StdAudio.play(changeVolume(pitch, duration,.1));
-
+            StdAudio.play(harmonics(pitch, duration));
+            StdAudio.play(majorChord(pitch, duration));
+            StdAudio.play(minorChord(pitch, duration));
+            StdAudio.play(changeVolume(minorChord(pitch, duration),10));
+           	StdAudio.play(fadeIn(minorChord(pitch,duration),2));
            	StdAudio.play(fadeOut(majorChord(pitch,duration),2));
            	// ArrayTools.printArray(fadeIn(majorChord(pitch,duration),2));
-            // StdAudio.play(changeVolume(pitch, duration,.1));
+            
         }
     }
     
@@ -48,10 +48,8 @@ public class MusicLibrary {
         return f;
     }
 
-    public static double[] changeVolume(double pitch, double duration, double volume) {
-        double hz = 440 * Math.pow(2, pitch / 12.0);
-        double[] e = sinstuff(duration, hz);
-        return ArrayTools.scale(e, volume);
+    public static double[] changeVolume(double[] a, double volume) {
+        return ArrayTools.scale(a, volume);
     }
 
     public static double[] sum(double[] a, double[] b, double c, double d) {
