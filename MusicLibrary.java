@@ -15,6 +15,7 @@ public class MusicLibrary {
             // StdAudio.play(changeVolume(pitch, duration,.1));
 
            	StdAudio.play(fadeOut(majorChord(pitch,duration),2));
+           	// ArrayTools.printArray(fadeIn(majorChord(pitch,duration),2));
             // StdAudio.play(changeVolume(pitch, duration,.1));
         }
     }
@@ -68,25 +69,28 @@ public class MusicLibrary {
 
     public static double[] fadeIn(double[] a, int secs) {
     	int time = (int) (StdAudio.SAMPLE_RATE * secs);
-    	double add = 1/time;
+    	double[] b = ArrayTools.duplicate(a);
 
     	for (int i =0; i<time; i++) {
-    		b[i]= a[i]*i;
+    		b[i]= a[i]*i/time;
+    		System.out.println(b[i]);
     	}
 
-    	return a;
+    	return b;
+
     }
 
     public static double[] fadeOut(double[] a, int secs) {
-    	int time = (int) (StdAudio.SAMPLE_RATE * secs);
-    	double usualval = a[a.length-time];
-    	double add = usualval/time;
+ 		int time = (int) (StdAudio.SAMPLE_RATE * secs);
+    	double[] b = ArrayTools.duplicate(a);
 
-    	for (int i = 0; i<time; i++) {
-    		a[a.length-i-1]= usualval-(add*i);
+
+    	for (int i =time; i<0; i++) {
+    		b[a.length-i]= a[a.length-i]*i/time;
+    		System.out.println(b[i]);
     	}
-
-    	return a;
+    	
+    	return b;
     }
 
     public static double[] sinstuff(double duration, double hz) {
