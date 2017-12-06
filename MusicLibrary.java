@@ -9,15 +9,16 @@ public class MusicLibrary {
             // read in duration in seconds
             double duration = StdIn.readDouble();
 
-            /*StdAudio.play(harmonics(pitch, duration));
-            StdAudio.play(majorChord(pitch, duration));
-            StdAudio.play(minorChord(pitch, duration));
-            StdAudio.play(changeVolume(minorChord(pitch, duration),10));
-           	StdAudio.play(fadeIn(minorChord(pitch,duration),2));
-           	StdAudio.play(fadeOut(majorChord(pitch,duration),2));*/
+            // StdAudio.play(harmonics(pitch, duration));
+            // StdAudio.play(majorChord(pitch, duration));
+            // StdAudio.play(minorChord(pitch, duration));
+            // StdAudio.play(changeVolume(minorChord(pitch, duration),10));
+           	// StdAudio.play(fadeIn(minorChord(pitch,duration),2));
+           	// StdAudio.play(fadeOut(majorChord(pitch,duration),2));
            	
            	double[] a = {0,0,0,0,0,0,0,22,28,91,34,18,29,22,0,0,0,0,0,0};
-           	ArrayTools.printArray(trim(a));
+           	ArrayTools.printArray(echo(sinstuff(duration,hz),10,1,2));
+           	StdAudio.play(echo(majorChord(pitch,duration),10,.5,5));
             
         }
     }
@@ -116,6 +117,23 @@ public class MusicLibrary {
     		System.out.println(b[i]);
     	}
     	
+    	return b;
+    }
+
+    public static double[] echo(double[] a, int volume, double duration, int repetition){
+    	int time = (int) (StdAudio.SAMPLE_RATE * duration);
+    	double[] b = new double[repetition*a.length+repetition*time];
+    	
+    	int volumeInterval = volume/repetition;
+    	for(int x=0; x<=repetition-1; x++){
+    		double[] c = changeVolume(a, volume-volumeInterval*x);
+    		for (int j = 0; j<c.length; j++) {
+    			b[j+x*(c.length+time)] = c[j];
+    		}
+    		for(int y=c.length; y<c.length+time; y++){
+    			b[x*(c.length+time)+y] = 0;
+    		}
+    	}	
     	return b;
     }
 
