@@ -146,4 +146,18 @@ public class MusicLibrary {
 
         return a;
     }
+
+    public static double[] concatenateArray(double[] a, double[] b) {
+    	double[] c = new double[a.length+b.length];
+    	for (int i = 0, i<a.length; i++) {
+    		c[i] = a[i];
+    	} 
+
+    	for (int i = 0, i<a.length; i++) {
+    		c[i+a.length] = a[i];
+    	}  
+
+    	return c;
+    }
+
 }
