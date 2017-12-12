@@ -17,8 +17,10 @@ public class MusicLibrary {
            	// StdAudio.play(fadeOut(majorChord(pitch,duration),2));
            	
            	double[] a = {0,0,0,0,0,0,0,22,28,91,34,18,29,22,0,0,0,0,0,0};
-           	ArrayTools.printArray(echo(sinstuff(duration,hz),10,1,2));
-           	StdAudio.play(echo(majorChord(pitch,duration),10,.5,5));
+           	double[] b = {0,0,0,0,0,0,0,22,28,91,34,18,29,22,0,0,0,0,0,0};
+           	ArrayTools.printArray(concatenateArray(a,b));
+           	// ArrayTools.printArray(echo(sinstuff(duration,hz),10,1,2));
+           	// StdAudio.play(echo(majorChord(pitch,duration),10,.5,5));
             
         }
     }
@@ -146,18 +148,4 @@ public class MusicLibrary {
 
         return a;
     }
-
-    public static double[] concatenateArray(double[] a, double[] b) {
-    	double[] c = new double[a.length+b.length];
-    	for (int i = 0, i<a.length; i++) {
-    		c[i] = a[i];
-    	} 
-
-    	for (int i = 0, i<a.length; i++) {
-    		c[i+a.length] = a[i];
-    	}  
-
-    	return c;
-    }
-
 }

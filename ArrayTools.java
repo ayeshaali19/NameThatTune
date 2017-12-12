@@ -24,8 +24,8 @@ public class ArrayTools {
 
 	/**
    * This method is used to find the max value in an array.
-   * @param a[] This is the only parameter for the method: it inputs an array.
-   * @return max This double holds the maximum value of the array.
+   * @param a[]; This is the only parameter for the method: it inputs an array.
+   * @return max; This double holds the maximum value of the array.
    */
 
 	public static double max(double a[]) {
@@ -38,8 +38,8 @@ public class ArrayTools {
 
 		/**
    * This method is used to find the min value in an array.
-   * @param a[] This is the only parameter for the method: it inputs an array.
-   * @return min This double holds the minimum value of the array.
+   * @param a[]; This is the only parameter for the method: it inputs an array.
+   * @return min; This double holds the minimum value of the array.
    */
 
 	public static double min(double a[]) {
@@ -52,8 +52,8 @@ public class ArrayTools {
 
 		/**
    * This method is used to find the average of the values of an array.
-   * @param a[] This is the only parameter for the method: it inputs an array.
-   * @return average This double holds the average value of the array.
+   * @param a[]; This is the only parameter for the method: it inputs an array.
+   * @return average; This double holds the average value of the array.
    */
 
 	public static double mean(double a[]) {
@@ -67,8 +67,8 @@ public class ArrayTools {
 
 		/**
    * This method is creates a new array identical to the inputed array.
-   * @param a[] This is the only parameter for the method: it inputs an array.
-   * @return b[] This array is identical to the input array.
+   * @param a[]; This is the only parameter for the method: it inputs an array.
+   * @return b[]; This array is identical to the input array.
    */
 
 	public static double[] duplicate(double a[]) {
@@ -81,8 +81,8 @@ public class ArrayTools {
 
 		/**
    * This method is used to reverse the order of an array.
-   * @param a[] This is the only parameter for the method: it inputs an array.
-   * @return b[] This array is a reversed version of the input.
+   * @param a[]; This is the only parameter for the method: it inputs an array.
+   * @return b[]; This array is a reversed version of the input.
    */
 
 	public static double[] reverse(double a[]) {
@@ -97,8 +97,8 @@ public class ArrayTools {
 
 		/**
    * This method is used to figure out if an array is identical to another by both size and content.
-   * @param a[] One of the arrays being compared
-    *@param b[] The other array being compared
+   * @param a[]; One of the arrays being compared
+    *@param b[]; The other array being compared
    * @return boolean; True or false is returned.
    */
 
@@ -115,9 +115,9 @@ public class ArrayTools {
 
 	/**
    * This method creates a scaled version of an inputed array.
-   * @param a[] An inputed array
-    *@param c The scale factor
-   * @return b[] A new array that is a scaled version of a[].
+   * @param a[]; An inputed array
+    *@param c; The scale factor
+   * @return b[]; A new array that is a scaled version of a[].
    */
 
 	public static double[] scale(double a[], double c) {
@@ -131,33 +131,22 @@ public class ArrayTools {
 
 	/**
    * This method is used to figure out if an array is identical to another by both size and content.
-   * @param a[] One of the arrays being added
-   * @param b[] The other array being added
-   * @param c The weighted factor being applied to array a.
-   * @param d The weighted factor being applied to array b.
-   * @return e[] An array that is the weighted addition of a and b.
+   * @param a[]; One of the arrays being added
+   * @param b[]; The other array being added
+   * @param c; The weighted factor being applied to array a.
+   * @param d; The weighted factor being applied to array b.
+   * @return e[]; An array that is the weighted addition of a and b.
    */
 	public static double[] add(double a[], double b[], double c, double d) {
 		double[] e;
-		double f;
 		if (a.length > b.length) {
 			e = new double[a.length];
-			f = b.length;
 		} else {
 			e = new double[b.length];
-			f = a.length;
 		}
 
 		for (int i = 0; i< e.length; i++) {
-			if (i < f) {
-				e[i] = a[i]*c + b[i]*d;
-			} else {
-				if (e.length == a.length) {
-					e[i] = a[i]*c;
-				} else if (e.length == b.length) {
-					e[i] = b[i]*d;
-				}
-			}
+			e[i] = a[i]*c + b[i]*d;
 		}
 
 		return e;
@@ -165,26 +154,26 @@ public class ArrayTools {
 
 	/**
    * This method returns a subsection of an inputed array.
-   * @param a[] An inputed array
-   * @param b The first term number of the wanted subsection
-   * @param c The last term number of the wanted subsection
-   * @return d[] The created array with the subsection of the array
+   * @param a[]; An inputed array
+   * @param b; The first term number of the wanted subsection
+   * @param c; The last term number of the wanted subsection
+   * @return d[]; The created array with the subsection of the array
    */
 
 	public static double[] copy(double a[], int b, int c) {
-		double[] d = new double[c-b-1];
+		double[] d = new double[c-b];
 		for (int i = 0; i<d.length; i++) {
-			d[i] = a[i+1+b];
+			d[i] = a[i+b];
 		}
 		return d;
 	}
 
 	/**
    * This method removes a subsection of an inputed array.
-   * @param a[] An inputed array
-   * @param b The first term number of the wanted subsection
-   * @param c The last term number of the wanted subsection
-   * @return d[] A created array with the subsection cut
+   * @param a[]; An inputed array
+   * @param b; The first term number of the wanted subsection
+   * @param c; The last term number of the wanted subsection
+   * @return d[]; A created array with the subsection cut
    */
 	public static double[] cut(double a[], int b, int c) {
 		double[] d = new double[a.length- (c-b)];
@@ -199,24 +188,25 @@ public class ArrayTools {
 	}
 
 	/**
-   * This method swaps two values from two inputed indexes in an array. 
-   * @param a[] An inputed array
-   * @param c The first term number being swapped
-   * @param d The second term number being swapped
+   * This method swaps two values from two inputed indexes in an array.
+   * @param a[]; An inputed array
+   * @param c; The first term number being swapped
+   * @return b; The second term number being swapped
    */
-	private static void swap(double a[], int c, int d) {
-		double e = a[d];
+	private static void swap(int a[], int c, int d) {
+		int e = a[d];
 		a[d] = a[c];
 		a[c] = e;
+		
 	}
 
 	/**
    * This method randomnly shuffles an inputed array.
-   * @param a[] An inputed array
-   * @return b A created array that contains all the values from a but in a random order.
+   * @param a[]; An inputed array
+   * @return b; A created array that contains all the values from a but in a random order.
    */
-	private static double[] shuffle(double a[]) {
-		double[] b = new double[a.length];
+	public static int[] shuffle(int a[]) {
+		int[] b = new int[a.length];
 		for (int i = 0; i < a.length; i++) {
 			b[i] = a[i];
 		}
@@ -229,6 +219,19 @@ public class ArrayTools {
 		return b;
 	}
 
+	public static double[] concatenateArray(double[] a, double[] b) {
+    	double[] c = new double[a.length+b.length];
+    	for (int i = 0; i<a.length; i++) {
+    		c[i] = a[i];
+    	} 
+
+    	for (int i = 0; i<b.length; i++) {
+    		c[i+a.length] = b[i];
+    	}  
+
+    	return c;
+    }
+
 	public static void main(String args[]) {
         double[] a = {1.0, 3.0, 5.0, 7.0, 9.0, 10.0, 12.8, 19.2, 24, 4392, 2.0, 23, 72, 19, 54, 45};
         double[] b = {2.0, 23, 72, 19, 54, 45};
@@ -238,34 +241,17 @@ public class ArrayTools {
         System.out.println("\nreverse:");
         printArray(reverse(a));
 
-		System.out.println("\nmax:");
-        System.out.println(max(a));
-
-        System.out.println("\nmin:");
-        System.out.println(min(a));
-
-        System.out.println("\nequal:");
-        System.out.println(areEqual(a, b));
-
-        System.out.println("\naverage:");
-        System.out.println(mean(a));
-
-        System.out.println("\nscale:");
-        printArray(scale(a, 5.0));
-
-        System.out.println("\nshuffle:");
-        printArray(shuffle(b));
-
-        System.out.println("\nadd:");
-        printArray(add(a, b, .2, .5));
-
         System.out.println("\ncopy:");
         printArray(copy(a, 2, 5));
 
         System.out.println("\ncut:");
         printArray(cut(a, 2, 4));
 
-        
+        // System.out.println("\nswap:");
+        // swap(a, 3, 5);
+
+        // System.out.println("\nshuffle:");
+        // printArray(shuffle(b));
     }
 
 }
