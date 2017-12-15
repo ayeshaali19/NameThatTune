@@ -1,9 +1,20 @@
 public class generateMusic {
+	public static double random = StdRandom.uniform()*100;
+	public static PrintWriter writer1 = new PrintWriter("chorusVerse"+(int)random+".txt", "UTF-8");
+	public static PrintWriter writer2 = new PrintWriter("notes"+(int)random+".txt", "UTF-8");
+		
 	public static int[] scale = chooseScale();
-	public static double[] chorus = chorus(scale);
-  	public static double[] verse = verse(scale);
+	public static double[] chorus = chorus(scale, writer1);
+  	public static double[] verse = verse(scale, writer1);
   
 	public static void main(String[] args) {
+		
+		double[] a = structure(chorus,verse);
+		writer1.close();
+		writer2.close();
+		StdAudio.play(a);
+		StdAudio.save("songnumber"+(int)random+".wav", a);
+		// StdAudio.play(structure(chorus, notesArray(scale)));
 	}
 
   	public static int[] chooseScale() {
@@ -50,7 +61,7 @@ public class generateMusic {
 	    return scale;
   	}
   
- 	public static double[] chorus(int[] scale) {
+ 	public static double[] chorus(int[] scale, PrintWriter writer1) {
 	  	int[] pickScale = ArrayTools.shuffle(scale);
 
 	    int note1 = pickScale[0];
@@ -64,24 +75,48 @@ public class generateMusic {
 	    double[] b = MusicLibrary.majorChord(note2, duration2);
 	    double[] c = MusicLibrary.majorChord(note3, duration3);
 
+	    writer1.println(note1, duration1, "Major");
+	    writer1.println(note2, duration2, "Major");
+	    writer1.println(note3, duration3, "Major");
 	    double[] d = ArrayTools.concatenateArray(ArrayTools.concatenateArray(a, b), c);
 	    double[] array = ArrayTools.concatenateArray(d,d);
 	    return array;
  	}
 
-	public static double[] verse(int[] scale) {
-  		int[] a = ArrayTools.shuffle(scale);
-  
-  	}
+	public static double[] verse(int[] scale, PrintWriter writer1) {
+  		double[] array = new double[2];
+  		int[] pickScale = ArrayTools.shuffle(scale);
 
-	public static double notesArray(double scale, int verseLength){
-	    double [] a = ArrayTools.shuffle(scale);
-	    double [] b = ArrayTools.shuffle(scale);
+	    for (int i =0; i< 5; i++) {
+		    double random = StdRandom.uniform();
+		    int note = pickScale[i];
+		    int duration = StdRandom.uniform(1,4);
+	  		double[] a = new double[2];
+	  		if (random > 0.5) {
+	  			a = MusicLibrary.majorChord(note, duration);
+	  			writer1.println(note, duration, "Major");
+	  		} else if (random<=0.5) {
+	  			a = MusicLibrary.minorChord(note, duration); 
+	  			writer1.println(note, duration, "Minor");
+	  		}	
+
+	  		array = ArrayTools.concatenateArray(array,a);
+  		}
 		
-	    double[] oneRepeat = ArrayTools.concatenateArray(a,b);
 
-	    int repetition = int (verseLength/10); 
-	    double[] notes = new int[oneRepeat.length*repetition];
+		double[] notesA = notesArray(scale, array.length, writer2);
+		double[] returnedA = ArrayTools.add(array, notesA, .5, .5);
+		return returnedA;
+ 	}
+
+	public static double[] notesArray(int[] scale, int verseLength, PrintWriter writer2){
+	    int [] a = ArrayTools.shuffle(scale);
+	    int [] b = ArrayTools.shuffle(scale);
+		
+	    int[] oneRepeat = ArrayTools.concatenateArray(a,b);
+
+	    int repetition = (int)(verseLength/StdAudio.SAMPLE_RATE)/5; 
+	    int[] notes = new int[oneRepeat.length*repetition];
 
 	    for(int x=0; x<repetition; x++){
 	    	for(int y=0; y<oneRepeat.length; y++){
@@ -89,12 +124,13 @@ public class generateMusic {
 	     	}  
 	    }
 
-   		double[] array = new double[1];
-
+   		double[] testA = new double[1];
    		for (int i = 0; i <notes.length; i++) {
-   			array = ArrayTools.concatenateArray(array, MusicLibrary.sinstuff(1, 440 * Math.pow(2, notes[i] / 12.0)));
+   			writer2.println(notes[i], .5);
+   			double[] singleN = MusicLibrary.sinstuff(.5, 440 * Math.pow(2, notes[i] / 12.0));
+   			testA = ArrayTools.concatenateArray(testA,singleN);
    		}
-   		return array;
+   		return testA;
 	}
 
 
@@ -102,11 +138,12 @@ public class generateMusic {
   		double[] array = new double[2];
   		for (int i = 0; i< 7; i++) {
   			double random = StdRandom.uniform();
+  			double[] a = new double[2];
   			if (random > 0.5) {
-  				double[] a = chorus; 
+  				a = chorus; 
   			} else if (random<=0.5) {
-  				double[] a = verse; 
-  			}	
+  				a = verse; 
+  			}
   			array = ArrayTools.concatenateArray(array, a);
   		}
   		return array;

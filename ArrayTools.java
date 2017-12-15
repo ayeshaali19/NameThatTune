@@ -22,6 +22,12 @@ public class ArrayTools {
 		}
 	}
 
+	public static void printArray (int a[]) {
+		for (int i = 0; i<a.length; i++) {
+			System.out.println(a[i]);
+		}
+	}
+
 	/**
    * This method is used to find the max value in an array.
    * @param a[]; This is the only parameter for the method: it inputs an array.
@@ -137,18 +143,29 @@ public class ArrayTools {
    * @param d; The weighted factor being applied to array b.
    * @return e[]; An array that is the weighted addition of a and b.
    */
-	public static double[] add(double a[], double b[], double c, double d) {
+	
+	public static double[] add (double a[], double b[], double c, double d){
 		double[] e;
-		if (a.length > b.length) {
+		double shorter;
+		if (a.length>b.length){
 			e = new double[a.length];
+			shorter = b.length;
 		} else {
 			e = new double[b.length];
+			shorter = a.length;
 		}
 
-		for (int i = 0; i< e.length; i++) {
-			e[i] = a[i]*c + b[i]*d;
+		for (int i = 0; i<e.length; i++){
+			if(i<shorter){
+				e[i] = a[i]*c + b[i]*d;
+			} else {
+				if(e.length == a.length){
+					e[i] = a[i]*c + 0;
+				} else if (e.length == b.length){
+					e[i] = b[i]*d + 0;
+				}
+			}
 		}
-
 		return e;
 	}
 
@@ -230,6 +247,20 @@ public class ArrayTools {
     	}  
 
     	return c;
+    }
+
+    public static int[] concatenateArray(int[] a, int[] b) {
+    	int[] c = new int[a.length+b.length];
+    	for (int i = 0; i<a.length; i++) {
+    		c[i] = a[i];
+    	} 
+
+    	for (int i = 0; i<b.length; i++) {
+    		c[i+a.length] = b[i];
+    	}  
+
+    	// System.out.println(a.length+" "+b.length+" "+c.length);
+    	return c;	
     }
 
 	public static void main(String args[]) {

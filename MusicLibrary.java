@@ -18,7 +18,7 @@ public class MusicLibrary {
            	
            	double[] a = {0,0,0,0,0,0,0,22,28,91,34,18,29,22,0,0,0,0,0,0};
            	double[] b = {0,0,0,0,0,0,0,22,28,91,34,18,29,22,0,0,0,0,0,0};
-           	ArrayTools.printArray(concatenateArray(a,b));
+           	// ArrayTools.printArray(concatenateArray(a,b));
            	// ArrayTools.printArray(echo(sinstuff(duration,hz),10,1,2));
            	// StdAudio.play(echo(majorChord(pitch,duration),10,.5,5));
             
