@@ -1,5 +1,4 @@
 public class MusicLibrary {
-
     public static void main(String[] args) {
         // repeat as long as there are more integers to read in
         while (!StdIn.isEmpty()) {
@@ -102,7 +101,6 @@ public class MusicLibrary {
 
     	for (int i =0; i<time; i++) {
     		b[i]= a[i]*i/time;
-    		System.out.println(b[i]);
     	}
 
     	return b;
@@ -116,7 +114,6 @@ public class MusicLibrary {
 
     	for (int i =0; i<time; i++) {
     		b[a.length-i-1]= a[a.length-i-1]*i/time;
-    		System.out.println(b[i]);
     	}
     	
     	return b;
