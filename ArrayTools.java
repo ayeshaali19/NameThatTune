@@ -22,6 +22,12 @@ public class ArrayTools {
 		}
 	}
 
+	public static void printArray (int a[], String c) {
+		for (int i = 0; i<a.length; i++) {
+			System.out.print(a[i]+" ");
+		}
+	}
+
 	public static void printArray (int a[]) {
 		for (int i = 0; i<a.length; i++) {
 			System.out.println(a[i]);

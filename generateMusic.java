@@ -2,22 +2,25 @@ import java.lang.*;
 import java.io.*;
 
 public class generateMusic {
-	public static int random = (int) StdRandom.uniform()*100;
-	public static int[] scale = chooseScale();
   
 	public static void main(String[] args) throws Exception {
-    	FileOutputStream f = new FileOutputStream("chords"+random+".txt");
+    	double weird = (StdRandom.uniform())*100;
+    	System.out.println(weird);
+
+    	FileOutputStream f = new FileOutputStream("chords"+(int)weird+".txt");
     	System.setOut(new PrintStream(f));
 
-    	FileOutputStream f1 = new FileOutputStream("notes"+random+".txt");
+    	FileOutputStream f1 = new FileOutputStream("notes"+(int)weird+".txt");
     	System.setErr(new PrintStream(f1));
 
+    	int[] scale = chooseScale();
     	double[] chorus = chorus(scale);
   		double[] verse = verse(scale);
     	
 		double[] a = structure(chorus,verse);
+		StdAudio.save("songnumber"+(int)weird+".wav", a);
 		StdAudio.play(a);
-		StdAudio.save("songnumber"+random+".wav", a);
+		
 	}
 
   	public static int[] chooseScale() {
@@ -38,6 +41,8 @@ public class generateMusic {
 	    };
 
 	    int num = StdRandom.uniform(1,12);
+	    System.out.print("Scale: ");
+	    ArrayTools.printArray(scales[num], "poop");
 	    return scales[num];
   	}
   
@@ -55,7 +60,7 @@ public class generateMusic {
 	    double[] b = MusicLibrary.majorChord(note2, duration2);
 	    double[] c = MusicLibrary.majorChord(note3, duration3);
 
-	    System.out.println("Chorus:");
+	    System.out.println("\nChorus:");
 	    System.out.println(note1+" "+duration1+" Major");
 	    System.out.println(note2+" "+duration2+" Major");
 	    System.out.println(note3+" "+duration3+" Major");
@@ -120,12 +125,12 @@ public class generateMusic {
   		double[] array = new double[2];
   		System.out.println("\nStructure:");
   		for (int i = 0; i< 7; i++) {
-  			double random = StdRandom.uniform();
+  			double random = StdRandom.uniform(2);
   			double[] a = new double[2];
-  			if (random > 0.5) {
+  			if (random == 0) {
   				a = chorus;
   				System.out.println("Chorus"); 
-  			} else if (random<=0.5) {
+  			} else if (random == 1) {
   				a = verse; 
   				System.out.println("Verse");
   			}
