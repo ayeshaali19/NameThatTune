@@ -1,0 +1,29 @@
+Scale: 8 11 1 4 6 
+Chorus:
+11 3 Major
+1 3 Major
+4 2 Major
+
+Verse:
+8 3 Major
+11 1 Major
+4 3 Minor
+1 3 Minor
+6 2 Major
+
+Structure:
+Verse
+Chorus
+Chorus
+Chorus
+Chorus
+Verse
+Verse
+Chorus
+Verse
+Verse
+Chorus
+Chorus
+Verse
+Chorus
+Verse

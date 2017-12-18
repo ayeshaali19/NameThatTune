@@ -5,7 +5,6 @@ public class generateMusic {
   
 	public static void main(String[] args) throws Exception {
     	double weird = (StdRandom.uniform())*100;
-    	System.out.println(weird);
 
     	FileOutputStream f = new FileOutputStream("chords"+(int)weird+".txt");
     	System.setOut(new PrintStream(f));
@@ -61,6 +60,9 @@ public class generateMusic {
 	    double[] c = MusicLibrary.majorChord(note3, duration3);
 
 	    System.out.println("\nChorus:");
+	    System.out.println(note1+" "+duration1+" Major");
+	    System.out.println(note2+" "+duration2+" Major");
+	    System.out.println(note3+" "+duration3+" Major");
 	    System.out.println(note1+" "+duration1+" Major");
 	    System.out.println(note2+" "+duration2+" Major");
 	    System.out.println(note3+" "+duration3+" Major");
@@ -124,7 +126,7 @@ public class generateMusic {
   	public static double[] structure(double[] chorus, double[] verse) {
   		double[] array = new double[2];
   		System.out.println("\nStructure:");
-  		for (int i = 0; i< 7; i++) {
+  		for (int i = 0; i< 15; i++) {
   			double random = StdRandom.uniform(2);
   			double[] a = new double[2];
   			if (random == 0) {
