@@ -48,6 +48,14 @@ public class ArrayTools {
 		return max;
 	}
 
+	public static int max(int a[]) {
+		int max = (int) Double.NEGATIVE_INFINITY;
+		for (int i = 0; i<a.length; i++) {
+			if (a[i] > max) max = a[i];
+		}
+		return max;
+	}
+
 		/**
    * This method is used to find the min value in an array.
    * @param a[]; This is the only parameter for the method: it inputs an array.
@@ -56,6 +64,15 @@ public class ArrayTools {
 
 	public static double min(double a[]) {
 		double min = Double.POSITIVE_INFINITY;
+		for (int i = 0; i<a.length; i++) {
+			if (a[i] < min) min = a[i];
+		}
+		return min;
+	}
+
+
+	public static int min(int a[]) {
+		int min = (int) Double.POSITIVE_INFINITY;
 		for (int i = 0; i<a.length; i++) {
 			if (a[i] < min) min = a[i];
 		}

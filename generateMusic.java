@@ -2,7 +2,15 @@ import java.lang.*;
 import java.io.*;
 
 public class generateMusic {
-  
+  	
+  	public static int[] versePitch = new int[5];
+  	public static int[] chorusPitch = new int[3];
+	public static int[] pitch = new int[0];
+
+	public static int[] verseD = new int[5];
+  	public static int[] chorusD = new int[3];
+	public static int[] duration = new int[0];  	
+
 	public static void main(String[] args) throws Exception {
     	double weird = (StdRandom.uniform())*100;
     	System.out.println(weird);
@@ -11,15 +19,18 @@ public class generateMusic {
     	System.setErr(new PrintStream(f));
 
     	int[] scale = chooseScale();
+    	
     	double[] chorus = chorus(scale);
+  		
   		double[] verse = verse(scale);
 
   		double[] a = structure(chorus,verse);
 
+
   		Thread thread1 = new Thread() {
    			public void run() {
-   				for (int i =0; i<a.length; i+=4400) {
-					drawStuff(ArrayTools.copy(a, i, i+4400));
+   				for (int i =0; i<a.length; i+=1) {
+					drawStuff(pitch, duration);
 				}
         	}
 		};
@@ -72,9 +83,20 @@ public class generateMusic {
 	    int note2 = pickScale[1];
 	    int note3 = pickScale[2];
 	    
+	    chorusPitch[0] = note1;
+	    chorusPitch[1] = note2;
+	    chorusPitch[2] = note3;
+	    chorusPitch = ArrayTools.concatenateArray(chorusPitch, chorusPitch);
+
 	    int duration1 = StdRandom.uniform(1,4);
 	    int duration2 = StdRandom.uniform(1,4);
 	    int duration3 = StdRandom.uniform(1,4);
+
+	    chorusD[0] = duration1;
+	    chorusD[1] = duration2;
+	    chorusD[2] = duration3;
+	    chorusD = ArrayTools.concatenateArray(chorusD, chorusD);
+
 	    double[] a = MusicLibrary.majorChord(note1, duration1);
 	    double[] b = MusicLibrary.majorChord(note2, duration2);
 	    double[] c = MusicLibrary.majorChord(note3, duration3);
@@ -87,6 +109,8 @@ public class generateMusic {
 	    System.err.println(note2+" "+duration2+" Major");
 	    System.err.println(note3+" "+duration3+" Major");
 
+
+
 	    double[] d = ArrayTools.concatenateArray(ArrayTools.concatenateArray(a, b), c);
 	    double[] array = ArrayTools.concatenateArray(d,d);
 	    return array;
@@ -95,11 +119,15 @@ public class generateMusic {
 	public static double[] verse(int[] scale) {
   		double[] array = new double[2];
   		int[] pickScale = ArrayTools.shuffle(scale);
+
+  		versePitch = pickScale;
+
   		System.err.println("\nVerse:");
 	    for (int i =0; i< 5; i++) {
 		    double random = StdRandom.uniform();
 		    int note = pickScale[i];
 		    int duration = StdRandom.uniform(1,4);
+		    verseD[i] = duration; 
 	  		double[] a = new double[2];
 	  		if (random > 0.5) {
 	  			a = MusicLibrary.majorChord(note, duration);
@@ -146,24 +174,33 @@ public class generateMusic {
   	public static double[] structure(double[] chorus, double[] verse) {
   		double[] array = new double[2];
   		System.err.println("\nStructure:");
+  		
   		for (int i = 0; i< 15; i++) {
   			double random = StdRandom.uniform(2);
   			double[] a = new double[2];
+
   			if (random == 0) {
   				a = chorus;
   				System.err.println("Chorus"); 
+  				pitch = ArrayTools.concatenateArray(pitch, chorusPitch);
+  				duration = ArrayTools.concatenateArray(duration, chorusD);
+
   			} else if (random == 1) {
   				a = verse; 
   				System.err.println("Verse");
+  				pitch = ArrayTools.concatenateArray(pitch, versePitch);
+  				duration = ArrayTools.concatenateArray(duration, verseD);
   			}
   			array = ArrayTools.concatenateArray(array, a);
   		}
+
+
   		double[] faded = MusicLibrary.fadeIn(array, 3);
   		double[] faded2 = MusicLibrary.fadeOut(faded, 3);
   		return faded2;
   	}
 
-  	public static void drawStuff(double[] a) {
+  	public static void drawStuff(int[] a, int[] duration) {
   		double baseMin = ArrayTools.min(a);
   		double baseMax = ArrayTools.max(a);
   		StdDraw.enableDoubleBuffering();
@@ -183,7 +220,7 @@ public class generateMusic {
    			}
   
        		StdDraw.show();
-       		StdDraw.pause(20);
+       		StdDraw.pause(duration[i]*1000);
   		}
   	}
 }
