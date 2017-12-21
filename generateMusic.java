@@ -5,21 +5,41 @@ public class generateMusic {
   
 	public static void main(String[] args) throws Exception {
     	double weird = (StdRandom.uniform())*100;
+    	System.out.println(weird);
 
-    	FileOutputStream f = new FileOutputStream("chords"+(int)weird+".txt");
-    	System.setOut(new PrintStream(f));
-
-    	FileOutputStream f1 = new FileOutputStream("notes"+(int)weird+".txt");
-    	System.setErr(new PrintStream(f1));
+    	FileOutputStream f = new FileOutputStream("sheetMusic"+(int)weird+".txt");
+    	System.setErr(new PrintStream(f));
 
     	int[] scale = chooseScale();
     	double[] chorus = chorus(scale);
   		double[] verse = verse(scale);
+
+  		double[] a = structure(chorus,verse);
+
+  		Thread thread1 = new Thread() {
+   			public void run() {
+   				for (int i =0; i<a.length; i+=4400) {
+					drawStuff(ArrayTools.copy(a, i, i+4400));
+				}
+        	}
+		};
+
+		Thread thread2 = new Thread() {
+   			public void run() {
+   				for (int i =0; i<a.length; i+=4400) {
+					StdAudio.play(ArrayTools.copy(a, i, i+4400));
+				}
+        	}
+		};
     	
-		double[] a = structure(chorus,verse);
-		StdAudio.save("songnumber"+(int)weird+".wav", a);
-		StdAudio.play(a);
+		thread1.start();
+		thread2.start();
+
+		thread1.join();
+		thread2.join();
 		
+		// StdAudio.save("songnumber"+(int)weird+".wav", a);
+		// StdAudio.play(a);
 	}
 
   	public static int[] chooseScale() {
@@ -40,7 +60,7 @@ public class generateMusic {
 	    };
 
 	    int num = StdRandom.uniform(1,12);
-	    System.out.print("Scale: ");
+	    System.err.print("Scale: ");
 	    ArrayTools.printArray(scales[num], "poop");
 	    return scales[num];
   	}
@@ -59,13 +79,13 @@ public class generateMusic {
 	    double[] b = MusicLibrary.majorChord(note2, duration2);
 	    double[] c = MusicLibrary.majorChord(note3, duration3);
 
-	    System.out.println("\nChorus:");
-	    System.out.println(note1+" "+duration1+" Major");
-	    System.out.println(note2+" "+duration2+" Major");
-	    System.out.println(note3+" "+duration3+" Major");
-	    System.out.println(note1+" "+duration1+" Major");
-	    System.out.println(note2+" "+duration2+" Major");
-	    System.out.println(note3+" "+duration3+" Major");
+	    System.err.println("\nChorus:");
+	    System.err.println(note1+" "+duration1+" Major");
+	    System.err.println(note2+" "+duration2+" Major");
+	    System.err.println(note3+" "+duration3+" Major");
+	    System.err.println(note1+" "+duration1+" Major");
+	    System.err.println(note2+" "+duration2+" Major");
+	    System.err.println(note3+" "+duration3+" Major");
 
 	    double[] d = ArrayTools.concatenateArray(ArrayTools.concatenateArray(a, b), c);
 	    double[] array = ArrayTools.concatenateArray(d,d);
@@ -75,7 +95,7 @@ public class generateMusic {
 	public static double[] verse(int[] scale) {
   		double[] array = new double[2];
   		int[] pickScale = ArrayTools.shuffle(scale);
-  		System.out.println("\nVerse:");
+  		System.err.println("\nVerse:");
 	    for (int i =0; i< 5; i++) {
 		    double random = StdRandom.uniform();
 		    int note = pickScale[i];
@@ -83,10 +103,10 @@ public class generateMusic {
 	  		double[] a = new double[2];
 	  		if (random > 0.5) {
 	  			a = MusicLibrary.majorChord(note, duration);
-	  			System.out.println(note+" "+duration+" Major");
+	  			System.err.println(note+" "+duration+" Major");
 	  		} else if (random<=0.5) {
 	  			a = MusicLibrary.minorChord(note, duration); 
-	  			System.out.println(note+" "+duration+" Minor");
+	  			System.err.println(note+" "+duration+" Minor");
 	  		}	
 
 	  		array = ArrayTools.concatenateArray(array,a);
@@ -125,21 +145,45 @@ public class generateMusic {
 
   	public static double[] structure(double[] chorus, double[] verse) {
   		double[] array = new double[2];
-  		System.out.println("\nStructure:");
+  		System.err.println("\nStructure:");
   		for (int i = 0; i< 15; i++) {
   			double random = StdRandom.uniform(2);
   			double[] a = new double[2];
   			if (random == 0) {
   				a = chorus;
-  				System.out.println("Chorus"); 
+  				System.err.println("Chorus"); 
   			} else if (random == 1) {
   				a = verse; 
-  				System.out.println("Verse");
+  				System.err.println("Verse");
   			}
   			array = ArrayTools.concatenateArray(array, a);
   		}
   		double[] faded = MusicLibrary.fadeIn(array, 3);
   		double[] faded2 = MusicLibrary.fadeOut(faded, 3);
   		return faded2;
+  	}
+
+  	public static void drawStuff(double[] a) {
+  		double baseMin = ArrayTools.min(a);
+  		double baseMax = ArrayTools.max(a);
+  		StdDraw.enableDoubleBuffering();
+
+  		for (int i = 0; i< a.length; i+=1) {
+  			StdDraw.clear();
+  			if (a[i] >= 0) {
+  				StdDraw.setPenColor(StdDraw.LIGHT_GRAY);
+  				StdDraw.filledCircle(0.5, 0.5, ArrayTools.scale(a[i], baseMin, baseMax, .1, .2)+0.075);
+  				StdDraw.setPenColor(StdDraw.BLACK);
+  				StdDraw.filledCircle(0.5, 0.5, ArrayTools.scale(a[i], baseMin, baseMax, .1, .2));
+  			} else if (a[i]<0) {
+   				StdDraw.setPenColor(StdDraw.LIGHT_GRAY);
+  				StdDraw.filledCircle(0.5, 0.5, ArrayTools.scale(a[i]*-1, baseMin, baseMax, .1, .2)+0.075);
+				StdDraw.setPenColor(StdDraw.BLACK);
+   				StdDraw.filledCircle(0.5, 0.5, ArrayTools.scale(a[i]*-1, baseMin, baseMax, .1, .2));
+   			}
+  
+       		StdDraw.show();
+       		StdDraw.pause(20);
+  		}
   	}
 }

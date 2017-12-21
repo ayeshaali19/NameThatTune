@@ -24,7 +24,7 @@ public class ArrayTools {
 
 	public static void printArray (int a[], String c) {
 		for (int i = 0; i<a.length; i++) {
-			System.out.print(a[i]+" ");
+			System.err.print(a[i]+" ");
 		}
 	}
 
@@ -267,6 +267,10 @@ public class ArrayTools {
 
     	// System.out.println(a.length+" "+b.length+" "+c.length);
     	return c;	
+    }
+
+     public static double scale(final double valueIn, final double baseMin, final double baseMax, final double limitMin, final double limitMax) {
+        return ((limitMax - limitMin) * (valueIn - baseMin) / (baseMax - baseMin)) + limitMin;
     }
 
 	public static void main(String args[]) {
