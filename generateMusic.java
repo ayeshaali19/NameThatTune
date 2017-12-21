@@ -7,9 +7,9 @@ public class generateMusic {
   	public static int[] chorusPitch = new int[3];
 	public static int[] pitch = new int[0];
 
-	public static int[] verseD = new int[5];
-  	public static int[] chorusD = new int[3];
-	public static int[] duration = new int[0];  	
+	public static double[] verseD;
+  	public static double[] chorusD = new double[3];
+	public static double[] duration = new double[0];  	
 
 	public static void main(String[] args) throws Exception {
     	double weird = (StdRandom.uniform())*100;
@@ -92,9 +92,9 @@ public class generateMusic {
 	    int duration2 = StdRandom.uniform(1,4);
 	    int duration3 = StdRandom.uniform(1,4);
 
-	    chorusD[0] = duration1;
-	    chorusD[1] = duration2;
-	    chorusD[2] = duration3;
+	    chorusD[0] = (double) duration1;
+	    chorusD[1] = (double) duration2;
+	    chorusD[2] = (double) duration3;
 	    chorusD = ArrayTools.concatenateArray(chorusD, chorusD);
 
 	    double[] a = MusicLibrary.majorChord(note1, duration1);
@@ -120,14 +120,11 @@ public class generateMusic {
   		double[] array = new double[2];
   		int[] pickScale = ArrayTools.shuffle(scale);
 
-  		versePitch = pickScale;
-
   		System.err.println("\nVerse:");
 	    for (int i =0; i< 5; i++) {
 		    double random = StdRandom.uniform();
 		    int note = pickScale[i];
-		    int duration = StdRandom.uniform(1,4);
-		    verseD[i] = duration; 
+		    int duration = StdRandom.uniform(1,4); 
 	  		double[] a = new double[2];
 	  		if (random > 0.5) {
 	  			a = MusicLibrary.majorChord(note, duration);
@@ -161,8 +158,11 @@ public class generateMusic {
 	     	}  
 	    }
 
+	    verseD = new double[notes.length];
+	    versePitch = notes; 
    		double[] testA = new double[1];
    		for (int i = 0; i <notes.length; i++) {
+   			verseD[i] = 0.5; 
    			System.err.println(notes[i]+" 0.5");
    			double[] singleN = MusicLibrary.sinstuff(.5, 440 * Math.pow(2, notes[i] / 12.0));
    			testA = ArrayTools.concatenateArray(testA,singleN);
@@ -200,7 +200,7 @@ public class generateMusic {
   		return faded2;
   	}
 
-  	public static void drawStuff(int[] a, int[] duration) {
+  	public static void drawStuff(int[] a, double[] duration) {
   		double baseMin = ArrayTools.min(a);
   		double baseMax = ArrayTools.max(a);
   		StdDraw.enableDoubleBuffering();
@@ -220,7 +220,7 @@ public class generateMusic {
    			}
   
        		StdDraw.show();
-       		StdDraw.pause(duration[i]*1000);
+       		StdDraw.pause((int) (duration[i]* (double)1000));
   		}
   	}
 }
