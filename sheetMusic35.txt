@@ -1,0 +1,55 @@
+Scale: 5 7 9 0 2 
+Chorus:
+7 2 Major
+2 1 Major
+0 2 Major
+7 2 Major
+2 1 Major
+0 2 Major
+
+Verse:
+7 2 Minor
+9 2 Major
+2 3 Major
+5 2 Minor
+0 1 Major
+5 0.5
+2 0.5
+9 0.5
+0 0.5
+7 0.5
+2 0.5
+0 0.5
+5 0.5
+9 0.5
+7 0.5
+5 0.5
+2 0.5
+9 0.5
+0 0.5
+7 0.5
+2 0.5
+0 0.5
+5 0.5
+9 0.5
+7 0.5
+
+Structure:
+Verse
+Verse
+Verse
+Verse
+Verse
+Verse
+Verse
+Chorus
+Chorus
+Verse
+Chorus
+Chorus
+Chorus
+Verse
+Chorus
+Exception in thread "Thread-0" java.lang.ArrayIndexOutOfBoundsException: -1
+	at generateMusic.drawStuff(generateMusic.java:223)
+	at generateMusic$1.run(generateMusic.java:29)

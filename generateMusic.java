@@ -19,27 +19,20 @@ public class generateMusic {
     	System.setErr(new PrintStream(f));
 
     	int[] scale = chooseScale();
-    	
     	double[] chorus = chorus(scale);
-  		
   		double[] verse = verse(scale);
-
   		double[] a = structure(chorus,verse);
 
 
   		Thread thread1 = new Thread() {
    			public void run() {
-   				for (int i =0; i<a.length; i+=1) {
-					drawStuff(pitch, duration);
-				}
+				drawStuff(pitch, duration);
         	}
 		};
 
 		Thread thread2 = new Thread() {
    			public void run() {
-   				for (int i =0; i<a.length; i+=4400) {
-					StdAudio.play(ArrayTools.copy(a, i, i+4400));
-				}
+				StdAudio.play(a);
         	}
 		};
     	
@@ -49,8 +42,7 @@ public class generateMusic {
 		thread1.join();
 		thread2.join();
 		
-		// StdAudio.save("songnumber"+(int)weird+".wav", a);
-		// StdAudio.play(a);
+		StdAudio.save("songnumber"+(int)weird+".wav", a);
 	}
 
   	public static int[] chooseScale() {
@@ -205,22 +197,52 @@ public class generateMusic {
   		double baseMax = ArrayTools.max(a);
   		StdDraw.enableDoubleBuffering();
 
+  		int[][] colors;
+  		colors  = new int[][] {
+	   		{229, 55, 0},
+	   		{206, 53, 19},
+	    	{183, 51, 38},
+	    	{160, 49, 57},
+	   		{137, 48, 76},
+	    	{114, 46, 95},
+	    	{91, 44, 114},
+	    	{68, 43, 133},
+	    	{45, 41, 152},
+	    	{22, 39, 171},
+	    	{0, 38, 191}
+	    };
+  		
   		for (int i = 0; i< a.length; i+=1) {
+  			System.out.println("Here");
+  			System.out.println(System.currentTimeMillis());
+  			double radius = ArrayTools.scale(Math.abs(a[i]), baseMin, baseMax, .1, .2);
+  			double radius2 = ArrayTools.scale(Math.abs(a[i+1]), baseMin, baseMax, .1, .2); 
+  			double difference = radius2-radius;
+  			
+  			double colorD = ArrayTools.scale(Math.abs(a[i]), baseMin, baseMax, 2, 10);
+  			int[] color1 = colors[(int)colorD-2];
+  			int[] color2 = colors[(int)colorD-1];
+  			
   			StdDraw.clear();
-  			if (a[i] >= 0) {
-  				StdDraw.setPenColor(StdDraw.LIGHT_GRAY);
-  				StdDraw.filledCircle(0.5, 0.5, ArrayTools.scale(a[i], baseMin, baseMax, .1, .2)+0.075);
-  				StdDraw.setPenColor(StdDraw.BLACK);
-  				StdDraw.filledCircle(0.5, 0.5, ArrayTools.scale(a[i], baseMin, baseMax, .1, .2));
-  			} else if (a[i]<0) {
-   				StdDraw.setPenColor(StdDraw.LIGHT_GRAY);
-  				StdDraw.filledCircle(0.5, 0.5, ArrayTools.scale(a[i]*-1, baseMin, baseMax, .1, .2)+0.075);
-				StdDraw.setPenColor(StdDraw.BLACK);
-   				StdDraw.filledCircle(0.5, 0.5, ArrayTools.scale(a[i]*-1, baseMin, baseMax, .1, .2));
-   			}
-  
-       		StdDraw.show();
-       		StdDraw.pause((int) (duration[i]* (double)1000));
+   			StdDraw.setPenColor(color1[0], color1[1], color1[2]);
+  			StdDraw.filledCircle(0.5, 0.5, radius+0.075);
+  			StdDraw.setPenColor(color2[0], color2[1], color2[2]);
+  			StdDraw.filledCircle(0.5, 0.5, radius);
+  			StdDraw.show();
+  			StdDraw.pause((int)duration[i]*970);
+  			System.out.println(duration[i]);
+       		
+       		
+       		for (int j =0; j <150; j++) {
+  				StdDraw.clear();
+   				StdDraw.setPenColor(color1[0], color1[1], color1[2]);
+  				StdDraw.filledCircle(0.5, 0.5, radius+(difference*(double)j/150)+0.075);
+  				StdDraw.setPenColor(color2[0], color2[1], color2[2]);
+  				StdDraw.filledCircle(0.5, 0.5, radius+(difference*(double)j/150));
+  				StdDraw.show();
+  			}
+  			System.out.println(System.currentTimeMillis());
   		}
+
   	}
 }

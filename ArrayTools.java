@@ -240,6 +240,13 @@ public class ArrayTools {
 		
 	}
 
+	private static void swap(double a[], int c, int d) {
+		double e = a[d];
+		a[d] = a[c];
+		a[c] = e;
+		
+	}
+
 	/**
    * This method randomnly shuffles an inputed array.
    * @param a[]; An inputed array
@@ -247,6 +254,20 @@ public class ArrayTools {
    */
 	public static int[] shuffle(int a[]) {
 		int[] b = new int[a.length];
+		for (int i = 0; i < a.length; i++) {
+			b[i] = a[i];
+		}
+
+		for (int i =0; i < b.length; i++) {
+			int rand = (int)(Math.random()*a.length);
+			swap(b, i, rand);
+		} 
+
+		return b;
+	}
+
+	public static double[] shuffle(double a[]) {
+		double[] b = new double[a.length];
 		for (int i = 0; i < a.length; i++) {
 			b[i] = a[i];
 		}
@@ -290,9 +311,10 @@ public class ArrayTools {
         return ((limitMax - limitMin) * (valueIn - baseMin) / (baseMax - baseMin)) + limitMin;
     }
 
+
 	public static void main(String args[]) {
-        double[] a = {1.0, 3.0, 5.0, 7.0, 9.0, 10.0, 12.8, 19.2, 24, 4392, 2.0, 23, 72, 19, 54, 45};
-        double[] b = {2.0, 23, 72, 19, 54, 45};
+        double[] a = {1.0, 1.0, 1.0, 1.0, 1.0, 1.0};
+        double[] b = {30.0, 23, 72, 19, 54, 45};
         System.out.println("original:");
         printArray(a);
 
@@ -305,11 +327,12 @@ public class ArrayTools {
         System.out.println("\ncut:");
         printArray(cut(a, 2, 4));
 
-        // System.out.println("\nswap:");
-        // swap(a, 3, 5);
+        System.out.println("\nswap:");
+        swap(a, 3, 5);
 
-        // System.out.println("\nshuffle:");
-        // printArray(shuffle(b));
+        System.out.println("\nshuffle:");
+        printArray(shuffle(b));
+
     }
 
 }
