@@ -152,7 +152,7 @@ public class ArrayTools {
 	public static double[] scale(double a[], double c) {
 		double[] b = new double[a.length];
 		for (int i = 0; i<a.length; i++) {
-			b[i] = a[i]*c;
+			b[i] = c*a[i];
 		}
 		return b;
 	}
@@ -303,7 +303,6 @@ public class ArrayTools {
     		c[i+a.length] = b[i];
     	}  
 
-    	// System.out.println(a.length+" "+b.length+" "+c.length);
     	return c;	
     }
 

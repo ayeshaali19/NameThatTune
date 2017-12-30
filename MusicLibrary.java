@@ -24,18 +24,20 @@ public class MusicLibrary {
             double duration = StdIn.readDouble();
 
             //tests
-            StdAudio.play(harmonics(pitch, duration));
-            StdAudio.play(majorChord(pitch, duration));
-            StdAudio.play(minorChord(pitch, duration));
-            StdAudio.play(changeVolume(minorChord(pitch, duration),10));
-           	StdAudio.play(fadeIn(minorChord(pitch,duration),2));
-           	StdAudio.play(fadeOut(majorChord(pitch,duration),2));
+            // StdAudio.play(harmonics(pitch, duration));
+            // StdAudio.play(majorChord(pitch, duration));
+            // StdAudio.play(minorChord(pitch, duration));
+            // StdAudio.play(changeVolume(minorChord(pitch, duration),10));
+           	// StdAudio.play(fadeIn(minorChord(pitch,duration),2));
+           	// StdAudio.play(fadeOut(majorChord(pitch,duration),2));
            	
-           	double[] a = {0,0,0,0,0,0,0,22,28,91,34,18,29,22,0,0,0,0,0,0};
-           	double[] b = {0,0,0,0,0,0,0,22,28,91,34,18,29,22,0,0,0,0,0,0};
-            trim(a);
-            clip(a, 5.0);
-           	// StdAudio.play(echo(majorChord(pitch,duration),10,.5,5));
+           	// double[] a = {0,0,0,0,0,0,0,22,28,91,34,18,29,22,0,0,0,0,0,0};
+           	// double[] b = {0,0,0,0,0,0,0,22,28,91,34,18,29,22,0,0,0,0,0,0};
+            // trim(a);
+            // clip(a, 5.0);
+
+            StdAudio.play(echo(StdAudio.note(hz, duration, 1), 5, 3, 5));
+            // StdAudio.play(changeVolume(majorChord(pitch,duration),2));
             
         }
     }
@@ -104,7 +106,7 @@ public class MusicLibrary {
     }
 
     /**
-    * This method scales the ampliplayable array (one that has been returned from sinstuff()) to change the volume. It uses the scale method from the ArrayTools class. 
+    * This method scales the amplitude of the playable array (one that has been returned from sinstuff()) to change the volume. It uses the scale method from the ArrayTools class. 
     * @param a The array to be scaled
     * @param volume The scalar
     * @return array An array that holds the scaled version of the inputted array
@@ -129,19 +131,23 @@ public class MusicLibrary {
     * This method replaces every value greater than a given threshold with that threshold. 
     * @param a The array to be clipped
     * @param b The threshold
-    * @param c Scalar of array a
-    * @param d Scalar of array b
-    * @return array The result of adding the two inputted arrays
+    * @return c The clipped array
     */
     public static double[] clip(double[] a, double b) {
-    	for (int i = 0; i < a.length; i++) {
-			if (a[i] >= b) {
-				a[i] = b;
+    	double[] c = ArrayTools.duplicate(a);
+        for (int i = 0; i < c.length; i++) {
+			if (c[i] >= b) {
+				c[i] = b;
 			}
 		}
-		return a;
+		return c;
     }
 
+    /**
+    * This method removes leading and trailing 0's from an array. 
+    * @param a The array to be trimmed
+    * @return e The trimmed array
+    */
     public static double[] trim(double[] a) {
     	int index1 = 0;
     	int length = a.length;
@@ -168,6 +174,12 @@ public class MusicLibrary {
 		return e;
     }
 
+    /**
+    * This method scales the amplitude of the first given number of seconds of an array from 0 to the usual value. This allows the user to fade in music. 
+    * @param a The array to be manipulated
+    * @param secs The number of seconds the music should fade in for
+    * @return e The manipulated array
+    */
     public static double[] fadeIn(double[] a, int secs) {
     	int time = (int) (StdAudio.SAMPLE_RATE * secs);
     	double[] b = ArrayTools.duplicate(a);
@@ -180,6 +192,12 @@ public class MusicLibrary {
 
     }
 
+    /**
+    * This method scales the amplitude of the last given number of seconds of an array from the usual value to 0. This allows the user to fade out music. 
+    * @param a The array to be manipulated
+    * @param secs The number of seconds the music should fade out for
+    * @return e The manipulated array
+    */
     public static double[] fadeOut(double[] a, int secs) {
  		int time = (int) (StdAudio.SAMPLE_RATE * secs);
     	double[] b = ArrayTools.duplicate(a);
@@ -192,20 +210,27 @@ public class MusicLibrary {
     	return b;
     }
 
-    public static double[] echo(double[] a, int volume, double duration, int repetition){
-    	int time = (int) (StdAudio.SAMPLE_RATE * duration);
-    	double[] b = new double[repetition*a.length+repetition*time];
-    	
+    /**
+    * This method repeats a tone based on an echo volume and a time interval
+    * @param a The array to be manipulated
+    * @param volume The volume at which the echo should start
+    * @param secs The number of seconds the music should fade out for
+    * @param repetition The number of times the tone should repeat 
+    * @return finalA The final array
+    */
+    public static double[] echo(double[] a, int volume, double secs, int repetition){
+        int time = (int) (StdAudio.SAMPLE_RATE * secs);
+        double[] finalA = new double[0];
+        double[] zeros = new double[time];
+
+
     	int volumeInterval = volume/repetition;
     	for(int x=0; x<=repetition-1; x++){
     		double[] c = changeVolume(a, volume-volumeInterval*x);
-    		for (int j = 0; j<c.length; j++) {
-    			b[j+x*(c.length+time)] = c[j];
-    		}
-    		for(int y=c.length; y<c.length+time; y++){
-    			b[x*(c.length+time)+y] = 0;
-    		}
-    	}	
-    	return b;
+            finalA = ArrayTools.concatenateArray(finalA, c);
+            finalA = ArrayTools.concatenateArray(finalA, zeros);
+        }	
+
+    	return finalA;
     }
 }

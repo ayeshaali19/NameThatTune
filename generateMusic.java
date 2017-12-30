@@ -1,3 +1,15 @@
+/**
+*Generate Music
+*This generateMusic program does exactly what it sounds like.  
+*It randomly generates a 2 to 4 minute song by randomly choosing a scale, generating a chorus and verse, and choosing a song structure.
+*
+*Volume changes and other effects can be implemented onto pieces of music as well.
+* @author  Katherine Vella
+* @author  Ayesha Ali
+* @version 1.0
+* @since   12/30/17 
+*/
+
 import java.lang.*;
 import java.io.*;
 
@@ -36,13 +48,22 @@ public class generateMusic {
         	}
 		};
     	
+    	double[] conArr = new double[1];
+    	for (int i = 0; i< versePitch.length; i++) {
+    		double hz = 440 * Math.pow(2, versePitch[i] / 12.0);
+    		double[] b = StdAudio.note(hz, 0.5, 1);
+    		conArr = ArrayTools.concatenateArray(conArr, b);
+    	}
+
+    	// StdAudio.play(MusicLibrary.echo(conArr, 5, 2, 5));
+    	// StdAudio.save("songnumber"+(int)weird+".wav", a);
 		thread1.start();
 		thread2.start();
 
 		thread1.join();
 		thread2.join();
 		
-		StdAudio.save("songnumber"+(int)weird+".wav", a);
+		
 	}
 
   	public static int[] chooseScale() {
@@ -168,16 +189,16 @@ public class generateMusic {
   		System.err.println("\nStructure:");
   		
   		for (int i = 0; i< 15; i++) {
-  			double random = StdRandom.uniform(2);
+  			double random = StdRandom.gaussian(0.0, 0.33);
   			double[] a = new double[2];
 
-  			if (random == 0) {
+  			if (random > 0) {
   				a = chorus;
   				System.err.println("Chorus"); 
   				pitch = ArrayTools.concatenateArray(pitch, chorusPitch);
   				duration = ArrayTools.concatenateArray(duration, chorusD);
 
-  			} else if (random == 1) {
+  			} else if (random <= 0) {
   				a = verse; 
   				System.err.println("Verse");
   				pitch = ArrayTools.concatenateArray(pitch, versePitch);
@@ -213,8 +234,6 @@ public class generateMusic {
 	    };
   		
   		for (int i = 0; i< a.length; i+=1) {
-  			System.out.println("Here");
-  			System.out.println(System.currentTimeMillis());
   			double radius = ArrayTools.scale(Math.abs(a[i]), baseMin, baseMax, .1, .2);
   			double radius2 = ArrayTools.scale(Math.abs(a[i+1]), baseMin, baseMax, .1, .2); 
   			double difference = radius2-radius;
@@ -230,8 +249,6 @@ public class generateMusic {
   			StdDraw.filledCircle(0.5, 0.5, radius);
   			StdDraw.show();
   			StdDraw.pause((int)duration[i]*970);
-  			System.out.println(duration[i]);
-       		
        		
        		for (int j =0; j <150; j++) {
   				StdDraw.clear();
@@ -241,7 +258,6 @@ public class generateMusic {
   				StdDraw.filledCircle(0.5, 0.5, radius+(difference*(double)j/150));
   				StdDraw.show();
   			}
-  			System.out.println(System.currentTimeMillis());
   		}
 
   	}
