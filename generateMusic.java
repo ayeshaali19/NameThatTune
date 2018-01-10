@@ -122,11 +122,14 @@ public class generateMusic {
 	    System.err.println(note2+" "+duration2+" Major");
 	    System.err.println(note3+" "+duration3+" Major");
 
-
-
 	    double[] d = ArrayTools.concatenateArray(ArrayTools.concatenateArray(a, b), c);
 	    double[] array = ArrayTools.concatenateArray(d,d);
-	    return array;
+	    double[] zeros = new double[44000];
+	    for (int i =0; i< zeros.length; i++) {
+	    	zeros[i] = 0;
+	    }
+	    
+	    return ArrayTools.concatenateArray(array, zeros);
  	}
 
 	public static double[] verse(int[] scale) {

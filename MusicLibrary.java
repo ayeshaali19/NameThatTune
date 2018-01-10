@@ -36,8 +36,9 @@ public class MusicLibrary {
             // trim(a);
             // clip(a, 5.0);
 
-            StdAudio.play(echo(StdAudio.note(hz, duration, 1), 5, 3, 5));
-            // StdAudio.play(changeVolume(majorChord(pitch,duration),2));
+            StdAudio.play(echo(majorChord(pitch,duration), 3, 5));
+            // StdAudio.play(changeVolume(majorChord(pitch,duration),0.8));
+            // StdAudio.play( majorChord(pitch,duration));
             
         }
     }
@@ -218,15 +219,15 @@ public class MusicLibrary {
     * @param repetition The number of times the tone should repeat 
     * @return finalA The final array
     */
-    public static double[] echo(double[] a, int volume, double secs, int repetition){
+    public static double[] echo(double[] a, double secs, int repetition){
         int time = (int) (StdAudio.SAMPLE_RATE * secs);
         double[] finalA = new double[0];
         double[] zeros = new double[time];
 
 
-    	int volumeInterval = volume/repetition;
+    	int volumeInterval = 1/repetition;
     	for(int x=0; x<=repetition-1; x++){
-    		double[] c = changeVolume(a, volume-volumeInterval*x);
+    		double[] c = changeVolume(a, 1-volumeInterval*x);
             finalA = ArrayTools.concatenateArray(finalA, c);
             finalA = ArrayTools.concatenateArray(finalA, zeros);
         }	
