@@ -16,11 +16,11 @@ import java.io.*;
 public class generateMusic {
   	
   	public static int[] versePitch = new int[5];
-  	public static int[] chorusPitch = new int[3];
+  	public static int[] chorusPitch = new int[4];
 	public static int[] pitch = new int[0];
 
 	public static double[] verseD;
-  	public static double[] chorusD = new double[3];
+  	public static double[] chorusD = new double[4];
 	public static double[] duration = new double[0];  	
 
 	public static void main(String[] args) throws Exception {
@@ -99,6 +99,7 @@ public class generateMusic {
 	    chorusPitch[0] = note1;
 	    chorusPitch[1] = note2;
 	    chorusPitch[2] = note3;
+	    chorusPitch[3] = 0;
 	    chorusPitch = ArrayTools.concatenateArray(chorusPitch, chorusPitch);
 
 	    int duration1 = StdRandom.uniform(1,4);
@@ -108,6 +109,8 @@ public class generateMusic {
 	    chorusD[0] = (double) duration1;
 	    chorusD[1] = (double) duration2;
 	    chorusD[2] = (double) duration3;
+	    chorusD[3] = (double) 0.5;
+
 	    chorusD = ArrayTools.concatenateArray(chorusD, chorusD);
 
 	    double[] a = MusicLibrary.majorChord(note1, duration1);
@@ -123,13 +126,16 @@ public class generateMusic {
 	    System.err.println(note3+" "+duration3+" Major");
 
 	    double[] d = ArrayTools.concatenateArray(ArrayTools.concatenateArray(a, b), c);
-	    double[] array = ArrayTools.concatenateArray(d,d);
-	    double[] zeros = new double[44000];
+	    
+	    double[] zeros = new double[20000];
 	    for (int i =0; i< zeros.length; i++) {
 	    	zeros[i] = 0;
 	    }
 	    
-	    return ArrayTools.concatenateArray(array, zeros);
+	    double[] array = ArrayTools.concatenateArray(d,zeros);
+	    array = ArrayTools.concatenateArray(array,d);
+	    
+	    return array;
  	}
 
 	public static double[] verse(int[] scale) {
@@ -200,7 +206,6 @@ public class generateMusic {
   				System.err.println("Chorus"); 
   				pitch = ArrayTools.concatenateArray(pitch, chorusPitch);
   				duration = ArrayTools.concatenateArray(duration, chorusD);
-
   			} else if (random <= 0) {
   				a = verse; 
   				System.err.println("Verse");
