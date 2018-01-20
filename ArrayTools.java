@@ -34,6 +34,12 @@ public class ArrayTools {
 		}
 	}
 
+	public static void printArray (boolean a[]) {
+		for (int i = 0; i<a.length; i++) {
+			System.out.println(a[i]);
+		}
+	}
+
 	/**
    * This method is used to find the max value in an array.
    * @param a[]; This is the only parameter for the method: it inputs an array.
@@ -324,7 +330,7 @@ public class ArrayTools {
         printArray(copy(a, 2, 5));
 
         System.out.println("\ncut:");
-        printArray(cut(a, 2, 4));
+        printArray(cut(b, 2, 4));
 
         System.out.println("\nswap:");
         swap(a, 3, 5);
