@@ -36,10 +36,8 @@ public class MusicLibrary {
             // trim(a);
             // clip(a, 5.0);
 
-            StdAudio.play(echo(majorChord(pitch,duration), 3, 5));
+            // StdAudio.play(echo(majorChord(pitch,duration), 3, 5));
             // StdAudio.play(changeVolume(majorChord(pitch,duration),0.8));
-            // StdAudio.play( majorChord(pitch,duration));
-            
         }
     }
     
@@ -69,7 +67,7 @@ public class MusicLibrary {
         double hz = 440.0 * Math.pow(2, pitch / 12.0);
         double[] hi = sinstuff(duration, 2*hz);
         double[] lo = sinstuff(duration, hz/2);
-        double[] h  = sum(hi, lo, 0.5, 0.5);
+        double[] h  = sum(hi, lo, 0.4, 0.4);
         return h;
     }
 
@@ -179,7 +177,7 @@ public class MusicLibrary {
     * This method scales the amplitude of the first given number of seconds of an array from 0 to the usual value. This allows the user to fade in music. 
     * @param a The array to be manipulated
     * @param secs The number of seconds the music should fade in for
-    * @return e The manipulated array
+    * @return b The manipulated array
     */
     public static double[] fadeIn(double[] a, int secs) {
     	int time = (int) (StdAudio.SAMPLE_RATE * secs);
@@ -197,7 +195,7 @@ public class MusicLibrary {
     * This method scales the amplitude of the last given number of seconds of an array from the usual value to 0. This allows the user to fade out music. 
     * @param a The array to be manipulated
     * @param secs The number of seconds the music should fade out for
-    * @return e The manipulated array
+    * @return b The manipulated array
     */
     public static double[] fadeOut(double[] a, int secs) {
  		int time = (int) (StdAudio.SAMPLE_RATE * secs);
@@ -212,9 +210,8 @@ public class MusicLibrary {
     }
 
     /**
-    * This method repeats a tone based on an echo volume and a time interval
+    * This method repeats a tone based on a time interval and a number of repitions. The volume will always start from 1, its maximum and work its way down to 0.
     * @param a The array to be manipulated
-    * @param volume The volume at which the echo should start
     * @param secs The number of seconds the music should fade out for
     * @param repetition The number of times the tone should repeat 
     * @return finalA The final array

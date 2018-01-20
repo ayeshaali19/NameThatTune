@@ -338,6 +338,9 @@ public class ArrayTools {
         System.out.println("\nshuffle:");
         printArray(shuffle(b));
 
+        System.out.println("\nconcatenate Array:");
+        printArray(concatenateArray(a,b));
+
     }
 
 }

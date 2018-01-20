@@ -46,7 +46,7 @@ public class generateMusic {
 		Thread thread1 = new Thread() {
 			public void run() {
 				mainDraw(pitch, duration);
-				}
+			}
 		};
 
 		Thread thread2 = new Thread() {
@@ -54,8 +54,9 @@ public class generateMusic {
 				StdAudio.play(a);
 			}
 		};
-			// StdAudio.play(MusicLibrary.echo(conArr, 5, 2, 5));
-			// StdAudio.save("songnumber"+(int)weird+".wav", a);
+		
+		StdAudio.save("songnumber"+(int)weird+".wav", a);
+		
 		thread1.start();
 		StdAudio.play(conArr);
 		thread2.start();
@@ -108,6 +109,7 @@ public class generateMusic {
 		System.err.println(note1+" "+duration1+" Major");
 		System.err.println(note2+" "+duration2+" Major");
 		System.err.println(note3+" "+duration3+" Major");
+		System.err.println("rest "+"0.5");
 		System.err.println(note1+" "+duration1+" Major");
 		System.err.println(note2+" "+duration2+" Major");
 		System.err.println(note3+" "+duration3+" Major");
@@ -137,9 +139,12 @@ public class generateMusic {
 			if (random > 0.5) {
 				a = MusicLibrary.majorChord(note, duration);
 				System.err.println(note+" "+duration+" Major");
-			} else if (random<=0.5) {
+			} else if (random<0.5) {
 				a = MusicLibrary.minorChord(note, duration); 
 				System.err.println(note+" "+duration+" Minor");
+			} else {
+				a = MusicLibrary.harmonics(note, duration); 
+				System.err.println(note+" "+duration+" Harmonic");
 			}	
 			array = ArrayTools.concatenateArray(array,a);
 		}	
@@ -155,7 +160,7 @@ public class generateMusic {
 		
 		int[] oneRepeat = ArrayTools.concatenateArray(a,b);
 
-		int repetition = (int)(verseLength/StdAudio.SAMPLE_RATE)/5; 
+		int repetition = (int)((verseLength/StdAudio.SAMPLE_RATE)/5)+1; 
 		int[] notes = new int[oneRepeat.length*repetition];
 
 		for(int x=0; x<repetition; x++){
@@ -166,7 +171,7 @@ public class generateMusic {
 
 		verseD = new double[notes.length];
 		versePitch = new int[notes.length];
-	
+		System.err.println("\nNotes Overlayed on Verse: ");
 		double[] testA = new double[1];
 		for (int i = 0; i <notes.length; i++) {
 			versePitch[i] = notes[i];
@@ -179,7 +184,7 @@ public class generateMusic {
 	}
 
 	public static double[] structure(double[] chorus, double[] verse) {
-		double[] array = new double[2];
+		double[] array = new double[0];
 		System.err.println("\nStructure:");
 			
 		for (int i = 0; i< 15; i++) {
@@ -236,7 +241,6 @@ public class generateMusic {
 			int[] color1 = determineC(a[i], colors, baseMin, baseMax);
 			//draw
 			StdDraw.clear();
-		
 			if (radius != .000001) {
 				StdDraw.setPenColor(color1[0], color1[1], color1[2]);
 				StdDraw.filledCircle(0.5, 0.5, radius+0.075);
@@ -245,9 +249,8 @@ public class generateMusic {
 			StdDraw.filledCircle(0.5, 0.5, radius);
 			
 			StdDraw.show();
-			StdDraw.pause((int)(duration[i]*1000));
 			System.out.println(i);
-
+			StdDraw.pause((int)(duration[i]*1000));
 			if (i == a.length-2) {
 				StdDraw.pause((int)(duration[i+1]*1000));
 			}
