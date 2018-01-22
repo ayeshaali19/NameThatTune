@@ -25,11 +25,10 @@
 *		c) the circle stays on the screen for the duration that corresponds to the pitch being visualized and then an animation makes the circle bigger or smaller to move onto the next pitch.
 *	4) The only time this pattern is deviated from is when a rest is approaching. Then the radius goes to 0.00001 and the circle becomes black. 
 *
-*
 * @author  Katherine Vella
 * @author  Ayesha Ali
 * @version 1.0
-* @since   12/30/17 
+* @since   1/22/18
 */
 
 import java.lang.*;
@@ -77,7 +76,7 @@ public class generateMusic {
 			}
 		};
 		
-		StdAudio.save("songnumber"+(int)weird+".wav", a);
+		StdAudio.save(""+(int)weird+".wav", a);
 		
 		thread1.start();
 		StdAudio.play(conArr);
