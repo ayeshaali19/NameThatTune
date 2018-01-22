@@ -1,0 +1,55 @@
+Scale: 0 2 4 7 9 
+Chorus:
+2 2 Major
+9 3 Major
+9 1 Major
+rest 0.5
+2 2 Major
+9 3 Major
+9 1 Major
+
+Verse:
+7 2 Major
+0 1 Major
+9 1 Major
+2 2 Major
+4 1 Major
+
+Notes Overlayed on Verse: 
+4 0.5
+9 0.5
+7 0.5
+0 0.5
+2 0.5
+2 0.5
+0 0.5
+9 0.5
+4 0.5
+7 0.5
+4 0.5
+9 0.5
+7 0.5
+0 0.5
+2 0.5
+2 0.5
+0 0.5
+9 0.5
+4 0.5
+7 0.5
+
+Structure:
+Verse
+Chorus
+Verse
+Chorus
+Chorus
+Chorus
+Chorus
+Verse
+Chorus
+Verse
+Chorus
+Verse
+Verse
+Verse
+Verse
